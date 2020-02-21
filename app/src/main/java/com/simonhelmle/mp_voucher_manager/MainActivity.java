@@ -3,8 +3,8 @@ package com.simonhelmle.mp_voucher_manager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 HttpURLConnection conn = DBConnection.openGEThttpConnection();
                 DBInteraction.createVoucherListInStorage(conn);
-                Log.i("Connection estbalished.", "Database connection successfully established. Data loaded.");
+                Toast.makeText(getApplicationContext(), "Data Base successfully connected. Data loaded.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

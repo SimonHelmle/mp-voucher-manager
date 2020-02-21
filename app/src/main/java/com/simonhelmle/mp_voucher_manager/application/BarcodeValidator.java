@@ -1,5 +1,6 @@
 package com.simonhelmle.mp_voucher_manager.application;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -29,6 +30,12 @@ public class BarcodeValidator extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startActivity(new Intent(BarcodeValidator.this, BarcodeScanner.class));
+    }
+
     private void initViews() {
 
         Bundle extras = getIntent().getExtras();
@@ -44,8 +51,16 @@ public class BarcodeValidator extends AppCompatActivity {
 
             if (Voucher.validateIfVoucherVoid(voucherCode)) {
 
-                binding.voucherStatusVoided.setText("Gutschein bereits entwertet.");
+                binding.voucherStatusVoided.setText("Gutschein wurde bereits am " + Voucher.getVoucherVoidDate(voucherCode) + " entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.RED);
+                binding.btnBarcodeVoidVoucher.setText("Weiteren Gutschein einlesen.");
+                binding.btnBarcodeVoidVoucher.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(BarcodeValidator.this, BarcodeScanner.class));
+                    }
+                });
             } else {
                 binding.voucherStatusVoided.setText("Gutschein noch nicht entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.GREEN);

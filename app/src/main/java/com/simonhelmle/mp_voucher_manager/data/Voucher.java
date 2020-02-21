@@ -5,7 +5,7 @@ public class Voucher {
     private int id;
     private String voucherCode;
     private String voucherCreationDate;
-    private boolean voucherVoid;
+    private int voucherVoid;
     private String voucherVoidDate;
 
     public String getVoucherCode() {
@@ -32,12 +32,46 @@ public class Voucher {
         this.voucherCreationDate = voucherCreationDate;
     }
 
-    public boolean isVoucherVoid() {
+    public static Boolean validateIfVoucherVoid(String voucherCode) {
+
+        /*
+        This method returns a boolean which indicates if a voucher has already been void.
+        This information is originally stored in the SQL Data Base.
+        If a voucher is void, it is not valid respectively has already been used.
+         */
+
+        Boolean voucherVoid = false;
+
+        for (Voucher voucher : DBStorage.voucherList) {
+
+            if (voucherCode.equals(voucher.getVoucherCode())) {
+
+                voucherVoid = voucher.getVoucherVoid() != 0;
+
+                break;
+            }
+        }
         return voucherVoid;
     }
 
-    public void setVoucherVoid(boolean voucherVoid) {
-        this.voucherVoid = voucherVoid;
+    public static String getVoucherVoidDate(String voucherCode) {
+
+        /*
+        This method returns the voucher void date for a specific voucher code.
+        This is the date on which the voucher has been used.
+         */
+
+        String voucherVoidDate = null;
+
+        for (Voucher voucher : DBStorage.voucherList) {
+
+            if (voucherCode.equals(voucher.getVoucherCode())) {
+
+                voucherVoidDate = voucher.getVoucherVoidDate();
+                break;
+            }
+        }
+        return voucherVoidDate;
     }
 
     public String getVoucherVoidDate() {
@@ -70,25 +104,11 @@ public class Voucher {
         return validationResult;
     }
 
-    public static Boolean validateIfVoucherVoid(String voucherCode) {
-
-        /*
-        This method returns a boolean which indicates if a voucher has already been void.
-        This information is originally stored in the SQL Data Base.
-        If a voucher is void, it is not valid respectively has already been used.
-         */
-
-        Boolean voucherVoid = false;
-
-        for (Voucher voucher : DBStorage.voucherList) {
-
-            if (voucherCode.equals(voucher.getVoucherCode())) {
-
-                voucherVoid = voucher.isVoucherVoid();
-                break;
-
-            }
-        }
+    public int getVoucherVoid() {
         return voucherVoid;
+    }
+
+    public void setVoucherVoid(int voucherVoid) {
+        this.voucherVoid = voucherVoid;
     }
 }
