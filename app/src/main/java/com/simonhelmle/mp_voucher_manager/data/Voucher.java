@@ -47,4 +47,48 @@ public class Voucher {
     public void setVoucherVoidDate(String voucherVoidDate) {
         this.voucherVoidDate = voucherVoidDate;
     }
+
+    public static String validateVoucher(String voucherCode) {
+
+        /*
+        This method returns the voucher code which has been scanned via QR reader,
+        in case the voucher code was found in the data base.
+         */
+
+        String validationResult = null;
+
+        for (Voucher voucher : DBStorage.voucherList) {
+
+            if (voucherCode.equals(voucher.getVoucherCode())) {
+
+                validationResult = voucher.getVoucherCode();
+                break;
+
+            }
+
+        }
+        return validationResult;
+    }
+
+    public static Boolean validateIfVoucherVoid(String voucherCode) {
+
+        /*
+        This method returns a boolean which indicates if a voucher has already been void.
+        This information is originally stored in the SQL Data Base.
+        If a voucher is void, it is not valid respectively has already been used.
+         */
+
+        Boolean voucherVoid = false;
+
+        for (Voucher voucher : DBStorage.voucherList) {
+
+            if (voucherCode.equals(voucher.getVoucherCode())) {
+
+                voucherVoid = voucher.isVoucherVoid();
+                break;
+
+            }
+        }
+        return voucherVoid;
+    }
 }

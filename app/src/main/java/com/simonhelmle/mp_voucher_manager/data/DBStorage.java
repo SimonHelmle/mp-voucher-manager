@@ -5,5 +5,5 @@ import java.util.List;
 
 public class DBStorage {
 
-    public List<Voucher> voucherList = new ArrayList<>();
+    public static List<Voucher> voucherList = new ArrayList<>();
 }
