@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".application.BarcodeScanner"></activity>
-        <activity android:name=".application.BarcodeValidation"></activity>
+        <activity android:name=".application.BarcodeValidator"></activity>
     </application>
 
 </manifest>

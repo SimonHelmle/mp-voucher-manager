@@ -14,8 +14,6 @@ import com.simonhelmle.mp_voucher_manager.databinding.ActivityBarcodeValidatorBi
 public class BarcodeValidator extends AppCompatActivity {
 
     private ActivityBarcodeValidatorBinding binding;
-    Bundle extras = getIntent().getExtras();
-    final String voucherCode = extras.getString("voucherCode");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,10 +23,16 @@ public class BarcodeValidator extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        Bundle extras = getIntent().getExtras();
+        final String voucherCode = extras.getString("voucherCode");
+
         initViews();
     }
 
     private void initViews() {
+
+        Bundle extras = getIntent().getExtras();
+        final String voucherCode = extras.getString("voucherCode");
 
         binding.barcodeResult.setText("Gutschein ID: " + voucherCode);
 
