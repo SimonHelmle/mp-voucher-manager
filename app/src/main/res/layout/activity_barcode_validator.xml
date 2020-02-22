@@ -41,8 +41,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Gutschein jetzt einlösen!"
+        android:text="Gutschein jetzt einlösen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voucherStatusVoided" />
+
+    <ImageView
+        android:id="@+id/statusGraphic"
+        android:layout_width="131dp"
+        android:layout_height="135dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/barcodeResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_smiley_success" />
 </androidx.constraintlayout.widget.ConstraintLayout>

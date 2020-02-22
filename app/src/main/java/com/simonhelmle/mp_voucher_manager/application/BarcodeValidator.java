@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.simonhelmle.mp_voucher_manager.R;
 import com.simonhelmle.mp_voucher_manager.data.Voucher;
@@ -30,11 +31,12 @@ public class BarcodeValidator extends AppCompatActivity {
         initViews();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startActivity(new Intent(BarcodeValidator.this, BarcodeScanner.class));
-    }
+    //TODO: Here a proper override for onResume should be implemented. Doesnt work with code below.
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        startActivity(new Intent(BarcodeValidator.this, BarcodeScanner.class));
+//    }
 
     private void initViews() {
 
@@ -45,7 +47,7 @@ public class BarcodeValidator extends AppCompatActivity {
 
         if (Voucher.validateVoucher(voucherCode) != null) {
 
-            binding.voucherStatusValidity.setText("Gutschein Code ist gültig.");
+            binding.voucherStatusValidity.setText("Gutschein Code in Datenbank gefunden.");
             binding.voucherStatusValidity.setTextColor(Color.GREEN);
             binding.barcodeResult.setTypeface(null, Typeface.BOLD);
 
@@ -53,6 +55,7 @@ public class BarcodeValidator extends AppCompatActivity {
 
                 binding.voucherStatusVoided.setText("Gutschein wurde bereits am " + Voucher.getVoucherVoidDate(voucherCode) + " entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.RED);
+                binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_warning, null));
                 binding.btnBarcodeVoidVoucher.setText("Weiteren Gutschein einlesen.");
                 binding.btnBarcodeVoidVoucher.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -64,12 +67,14 @@ public class BarcodeValidator extends AppCompatActivity {
             } else {
                 binding.voucherStatusVoided.setText("Gutschein noch nicht entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.GREEN);
+                binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_success, null));
             }
         } else {
 
             binding.voucherStatusValidity.setText("Gutschein Code ist ungültig.");
             binding.voucherStatusValidity.setTextColor(Color.RED);
             binding.barcodeResult.setTypeface(null, Typeface.BOLD);
+            binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_error, null));
 
             binding.voucherStatusVoided.setText("-");
         }

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         new LoadAllVouchersToStorage().execute();
+        Toast.makeText(getApplicationContext(), "Data Base successfully connected. Data loaded.", Toast.LENGTH_SHORT).show();
 
         binding.btnScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try {
-                HttpURLConnection conn = DBConnection.openGEThttpConnection();
+                HttpURLConnection conn = DBConnection.openGEThttpConnection(DBConnection.URL_GET_ALL_VOUCHERS);
                 DBInteraction.createVoucherListInStorage(conn);
-                Toast.makeText(getApplicationContext(), "Data Base successfully connected. Data loaded.", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
