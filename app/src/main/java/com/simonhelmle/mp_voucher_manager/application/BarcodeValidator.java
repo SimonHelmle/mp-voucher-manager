@@ -56,7 +56,7 @@ public class BarcodeValidator extends AppCompatActivity {
                 binding.voucherStatusVoided.setText("Gutschein wurde bereits am " + Voucher.getVoucherVoidDate(voucherCode) + " entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.RED);
                 binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_warning, null));
-                binding.btnBarcodeVoidVoucher.setText("Weiteren Gutschein einlesen.");
+                binding.btnBarcodeVoidVoucher.setText("Anderen Gutschein scannen");
                 binding.btnBarcodeVoidVoucher.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -68,14 +68,31 @@ public class BarcodeValidator extends AppCompatActivity {
                 binding.voucherStatusVoided.setText("Gutschein noch nicht entwertet.");
                 binding.voucherStatusVoided.setTextColor(Color.GREEN);
                 binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_success, null));
+                binding.btnBarcodeVoidVoucher.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String intentData = "";
+                        startActivity(new Intent(BarcodeValidator.this, BarcodeVoid.class).putExtra("voucherCode", voucherCode));
+
+
+                    }
+                });
             }
         } else {
 
             binding.voucherStatusValidity.setText("Gutschein Code ist ungültig.");
             binding.voucherStatusValidity.setTextColor(Color.RED);
             binding.barcodeResult.setTypeface(null, Typeface.BOLD);
+            binding.btnBarcodeVoidVoucher.setText("Anderen Gutschein scannen");
             binding.statusGraphic.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_smiley_error, null));
+            binding.btnBarcodeVoidVoucher.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    startActivity(new Intent(BarcodeValidator.this, BarcodeScanner.class));
+                }
+            });
             binding.voucherStatusVoided.setText("-");
         }
     }

@@ -3,6 +3,7 @@ package com.simonhelmle.mp_voucher_manager.database;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.simonhelmle.mp_voucher_manager.data.DBStorage;
+import com.simonhelmle.mp_voucher_manager.data.JsonResponse;
 import com.simonhelmle.mp_voucher_manager.data.Voucher;
 
 import java.io.BufferedInputStream;
@@ -15,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class DBInteraction {
     This class handles all interactions/communications between the app and the API. All methods within this class must be called within a new thread, separate to the main thread as per Android guidelines.
      */
 
-    public static String createAPIrequestString(Map<String, String> params) {
+    private static String createAPIrequestString(Map<String, String> params) {
 
         /* This method creates a request string appendix which is attached to the URI to pass parameters to the webservice/API.
          *
@@ -52,7 +54,7 @@ public class DBInteraction {
             i++;
         }
 
-        String requestString = sbParams.toString();
+        String requestString = encodeString(sbParams.toString());
         return requestString;
     }
 
@@ -64,7 +66,7 @@ public class DBInteraction {
          */
 
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        wr.writeBytes(requestString);
+        wr.writeBytes(URLEncoder.encode(requestString, "UTF-8"));
         wr.flush();
         wr.close();
     }
@@ -97,5 +99,56 @@ public class DBInteraction {
 
         new DBStorage().voucherList = new Gson().fromJson(result, voucherListType);
 
+    }
+
+    public static String encodeString(String string) {
+        try {
+            return URLEncoder.encode(string, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex.getCause());
+        }
+    }
+
+    public static boolean postVoucherVoid(HttpURLConnection conn) throws IOException {
+
+        /*
+        This method retrieves the input stream from the HTTP connection,
+        creates Voucher Objects based on the retrieved JSON Arrays
+        and writes the Voucher Objects into the DBStorage Class.
+        From here it can be assessed centrally during runtime by other application components.
+         */
+
+        boolean operationSuccess = false;
+
+        // First, the input stream is read from the open HTTP connection and written into a String.
+
+        InputStream in = new BufferedInputStream(conn.getInputStream());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String result = sb.toString();
+        reader.close();
+
+        // Second, the result String (JSON) is transformed into Voucher Class Objects and written into central storage location.
+
+        Type responseTypeToken = new TypeToken<JsonResponse>() {
+        }.getType();
+
+        JsonResponse response = new JsonResponse();
+        response = new Gson().fromJson(result, responseTypeToken);
+
+        //List responseArray = new Gson().fromJson(result, responseTypeToken);
+
+        // Third, check if data base operation was successful or not.
+
+        if (response.getSuccess() == 1) {
+
+            operationSuccess = true;
+        }
+
+        return operationSuccess;
     }
 }

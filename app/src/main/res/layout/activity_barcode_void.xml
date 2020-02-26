@@ -4,59 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".application.BarcodeValidator">
+    tools:context=".application.BarcodeVoid">
 
     <TextView
-        android:id="@+id/barcodeResult"
+        android:id="@+id/voidResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:gravity="center|center_horizontal"
-        android:text="barcodeResult"
+        android:text="voidResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusGraphic" />
 
     <TextView
-        android:id="@+id/voucherStatusValidity"
+        android:id="@+id/voucherVoidMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:gravity="center|center_horizontal"
-        android:text="voucherStatusValidity"
+        android:text="voucherVoidMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeResult" />
-
-    <TextView
-        android:id="@+id/voucherStatusVoided"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center|center_horizontal"
-        android:text="voucherStatusVoided"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/voucherStatusValidity" />
+        app:layout_constraintTop_toBottomOf="@+id/voidResult" />
 
     <Button
-        android:id="@+id/btnBarcodeVoidVoucher"
+        android:id="@+id/btnNewScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:gravity="center|center_horizontal"
-        android:text="Gutschein jetzt einlösen"
+        android:layout_marginTop="32dp"
+        android:text="Weiteren Gutschein scannen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/voucherStatusVoided" />
+        app:layout_constraintTop_toBottomOf="@+id/voucherVoidMessage" />
 
     <ImageView
         android:id="@+id/statusGraphic"
         android:layout_width="131dp"
         android:layout_height="135dp"
         android:layout_marginTop="64dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/voidResult"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

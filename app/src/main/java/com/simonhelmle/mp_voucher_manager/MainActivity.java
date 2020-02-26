@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.simonhelmle.mp_voucher_manager.application.BarcodeScanner;
+import com.simonhelmle.mp_voucher_manager.data.DBStorage;
 import com.simonhelmle.mp_voucher_manager.database.DBConnection;
 import com.simonhelmle.mp_voucher_manager.database.DBInteraction;
 import com.simonhelmle.mp_voucher_manager.databinding.ActivityMainBinding;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
+            if (DBStorage.voucherList != null) {
+                DBStorage.voucherList.clear();
+            }
+            
             try {
                 HttpURLConnection conn = DBConnection.openGEThttpConnection(DBConnection.URL_GET_ALL_VOUCHERS);
                 DBInteraction.createVoucherListInStorage(conn);

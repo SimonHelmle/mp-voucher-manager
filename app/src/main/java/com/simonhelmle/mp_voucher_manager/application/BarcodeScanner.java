@@ -98,7 +98,7 @@ public class BarcodeScanner extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                //               Toast.makeText(getApplicationContext(), "Barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -116,7 +116,7 @@ public class BarcodeScanner extends AppCompatActivity {
                         }
                     });
                 } else {
-                    txtBarcodeValue.setText("Kein gültiger Gutscheincode erkannt.");
+//                    txtBarcodeValue.setText("Kein Code erkannt.");
                 }
             }
         });
